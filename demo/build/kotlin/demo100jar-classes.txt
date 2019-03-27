@@ -1,0 +1,1 @@
+/Users/sprynoj/Documents/gradle-slack-uploader/demo/build/classes/kotlin/main/com/oliverspryn/gradleslackplugin/demo/MainKt.class
