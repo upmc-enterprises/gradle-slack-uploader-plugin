@@ -1,11 +1,11 @@
 buildscript {
     repositories {
         maven {
-            url uri('./repo')
+            url uri('../repo')
         }
     }
     dependencies {
-        classpath "com.oliverspryn.gradleslackuploaderplugin:gradle-slack-uploader-plugin:1.0.0"
+        classpath "com.oliverspryn.gradle:gradle-slack-uploader-plugin:1.0.0"
     }
 }
 
@@ -19,8 +19,8 @@ repositories {
     jcenter()
 }
 
-task showClasspath {
-    doLast {
-        buildscript.configurations.classpath.each { println it.name }
-    }
+uploadFileToSlack {
+    comment "sample.txt"
+    channels "general", "random"
+    filePath "sample.txt"
 }
