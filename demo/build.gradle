@@ -4,6 +4,7 @@ buildscript {
             url uri('../repo')
         }
     }
+
     dependencies {
         classpath "com.oliverspryn.gradle:gradle-slack-uploader-plugin:1.0.0"
     }
@@ -20,7 +21,9 @@ repositories {
 }
 
 uploadFileToSlack {
-    comment "sample.txt"
-    channels "general", "random"
+    comment "Hello from Gradle!"
+    channels "gradle-slack"
+    enabled true
     filePath "sample.txt"
+    token GRADLE_SLACK_UPLOADER_PLUGIN_TOKEN ?: "" // Defined in the global gradle.properties file
 }
