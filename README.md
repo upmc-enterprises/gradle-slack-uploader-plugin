@@ -12,7 +12,7 @@
 [📆 Version History](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
 
 ```text
-"Optimal for helping you improve your CI and CD practices."
+"Works to help you improve your CI and CD practices."
 ```
 
 <a href="https://kotlinlang.org/" target="_blank">
@@ -30,4 +30,12 @@
 <hr />
 </div>
 
-This plugin eases some of the burdens incurred whenever 
+Sometimes it is not always practical to push new software from Git straight into production. This plugin helps minimize some of the effort required to get your software into customer's hands by making it visible to an intended, internal group just before release. Here are some other useful examples of how this plugin can help:
+
+- Send Android or iOS apps to the development team's channel for uploading into Google Play
+- Upload files to a QA channel for verification and testing
+- Surface artifacts from a build to better understand its performance
+
+Whenever a file is uploaded, you can expect it to feel very custom and look like this:
+
+![Slack message from the Gradle plugin with an APK file](docs/slack-message.png)
