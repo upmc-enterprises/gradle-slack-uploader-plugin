@@ -7,7 +7,7 @@ import java.nio.file.Paths
 class GradleSlackUploaderPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
-        val extension = project.extensions.create(this::class.java.simpleName, GradleSlackPluginExtension::class.java)
+        val extension = project.extensions.create("gradleSlackUploader", GradleSlackPluginExtension::class.java)
 
         project.tasks.create("gradleSlackUploader", GradleSlackUploaderTask::class.java) { task ->
             task.channels = extension.channels
