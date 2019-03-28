@@ -22,8 +22,8 @@ repositories {
 
 uploadFileToSlack {
     comment "Hello from Gradle!"
-    channels "build-status"
+    channels "gradle-slack"
     enabled true
     filePath "sample.txt"
-    token "Probably best not to push this to your repo, use an environment variable, instead"
+    token GRADLE_SLACK_UPLOADER_PLUGIN_TOKEN ?: "" // Defined in the global gradle.properties file
 }
