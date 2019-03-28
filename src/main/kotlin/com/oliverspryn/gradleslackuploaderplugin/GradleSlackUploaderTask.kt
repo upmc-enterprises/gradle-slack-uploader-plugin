@@ -1,4 +1,4 @@
-package com.oliverspryn.gradleslackuploader
+package com.oliverspryn.gradleslackuploaderplugin
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction

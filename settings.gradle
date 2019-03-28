@@ -1,1 +1,11 @@
-rootProject.name = 'gradle-slack-uploader'
+pluginManagement {
+    repositories {
+        maven {
+            url './repo'
+        }
+
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'gradle-slack-uploader-plugin'

@@ -1,4 +1,4 @@
-package com.oliverspryn.gradleslackuploader
+package com.oliverspryn.gradleslackuploaderplugin
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
