@@ -1,26 +1,43 @@
 plugins {
-    id 'groovy'
+    id 'java-gradle-plugin'
+    id 'maven'
     id 'org.jetbrains.kotlin.jvm' version '1.3.21'
 }
 
-group 'com.oliverspryn.gradleslackuploader'
+group 'com.oliverspryn.gradle'
 version '1.0.0'
 
+gradlePlugin {
+    plugins {
+        gradleSlackUploaderPlugin {
+            id = 'com.oliverspryn.gradleslackuploaderplugin'
+            implementationClass = 'com.oliverspryn.gradle.SlackUploaderPlugin'
+        }
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-
+    // Gradle
     implementation gradleApi()
-    implementation localGroovy()
+
+    // Kotlin
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.21'
+
+    // jSlack
+    implementation 'com.github.seratch:jslack:1.3.0'
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('./repo'))
+        }
+    }
 }

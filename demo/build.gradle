@@ -1,0 +1,26 @@
+buildscript {
+    repositories {
+        maven {
+            url uri('../repo')
+        }
+    }
+    dependencies {
+        classpath "com.oliverspryn.gradle:gradle-slack-uploader-plugin:1.0.0"
+    }
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.3.21'
+}
+
+apply plugin: "com.oliverspryn.gradleslackuploaderplugin"
+
+repositories {
+    jcenter()
+}
+
+uploadFileToSlack {
+    comment "sample.txt"
+    channels "general", "random"
+    filePath "sample.txt"
+}
