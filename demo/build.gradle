@@ -21,9 +21,9 @@ repositories {
 }
 
 uploadFileToSlack {
-    comment "Hello from Gradle!"
+    comment "Our app is ready for release!"
     channels "gradle-slack"
     enabled true
-    filePath "sample.txt"
+    filePath "app-release.apk"
     token GRADLE_SLACK_UPLOADER_PLUGIN_TOKEN ?: "" // Defined in the global gradle.properties file
 }
