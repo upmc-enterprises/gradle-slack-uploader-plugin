@@ -1,5 +1,5 @@
 <div align="center">
-<img src="docs/banner.png" />
+<img src="docs/artwork/banner.png" />
 
 <br>
 <br>
@@ -34,7 +34,7 @@ Whenever a file is uploaded, you can expect it to feel very familiar and flexibl
 
 <div align="center">
 
-![Slack message from the Gradle plugin with an APK file](docs/slack-message.png)
+![Slack message from the Gradle plugin with an APK file](docs/screenshots/slack-message.png)
 
 </div>
 
@@ -131,7 +131,7 @@ uploadFileToSlack {
     comment "Our app is ready for release!"
     channels "public-release-channel", "developers"
     enabled true
-    filePath "app-release.apk"
+    filePath "build/outputs/apk/release/app-release.apk"
     token GRADLE_SLACK_UPLOADER_PLUGIN_TOKEN ?: "" // Defined in the global gradle.properties file
 }
 ```
@@ -170,3 +170,39 @@ Modifying Gradle's task graph is very simple and allows a task to run each time 
         uploadFileToSlack.dependsOn build
     }
     ```
+
+# Build and Run this Project
+
+If you would like to pull the source for the plugin and try it out yourself, here are a few things to know before getting started:
+
+- You'll need a variable in your global `gradle.properties` file called `GRADLE_SLACK_UPLOADER_PLUGIN_TOKEN`. This is a Slack bot OAuth token you'll need to create to test the plugin locally.
+- `./scripts/demo.sh` contains a small bootstrapping script to build the plugin and run the demo project in one command
+
+The demo script publishes the plugin's JAR file to a local Maven repository located at `<project root>/repo` and then that JAR is picked up the demo implementation looking at the same repository. The end result of a successful run is a small text file appearing in the intended Slack channel from a bot account.
+
+# FAQs
+
+Here are answer to a few questions you may encounter when setting up or using the plugin:
+
+- **Does this plugin support uploading more than one file at a time?** No. Please consider zipping up multiple files and sending them out as one package if you need to upload more than one file to Slack.
+- **How can I conditionally enable the plugin only on CI builds?** Most CIs have a set of default environment variables which identify themselves as a build environment. For example, [Travis CI](https://docs.travis-ci.com/user/environment-variables/#default-environment-variables), [Azure Pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#agent-variables), and [GitLab CI](https://docs.gitlab.com/ee/ci/variables/#predefined-environment-variables) all have documentation on this. For instance, on a Travis CI build, one could conditionally enable the plugin like so:
+
+    ```groovy
+    static def isCIMachine() {
+       return System.getenv('CI') != null
+    }
+
+    uploadFileToSlack {
+        enabled = isCIMachine()
+        ...
+    }
+    ```
+
+<br>
+<br>
+<br>
+
+<div align="center">
+<img alt="MyUPMC" src="docs/logos/myupmc.png" height="40" />
+<img alt="UPMC Enterprises" src="docs/logos/upmc-enterprises.jpg" height="40" />
+</div>
