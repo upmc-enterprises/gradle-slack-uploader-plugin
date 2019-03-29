@@ -21,7 +21,7 @@ repositories {
 }
 
 uploadFileToSlack {
-    comment "Hello from Gradle!"
+    comment "Our app is ready for release!"
     channels "gradle-slack"
     enabled true
     filePath "sample.txt"
