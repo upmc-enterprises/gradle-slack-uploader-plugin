@@ -199,10 +199,18 @@ Here are answer to a few questions you may encounter when setting up or using th
     ```
 
 <br>
+<hr />
 <br>
 <br>
 
 <div align="center">
-<img alt="MyUPMC" src="docs/logos/myupmc.png" height="40" />
-<img alt="UPMC Enterprises" src="docs/logos/upmc-enterprises.jpg" height="40" />
+<p>This plugin was inspired by a need for the <a href="https://myupmc.upmc.com" target="_blank">MyUPMC</a> project at <a href="https://enterprises.upmc.com" target="_blank">UPMC Enterprises</a></p>
+
+<a href="https://myupmc.upmc.com" target="_blank">
+    <img alt="MyUPMC" src="docs/logos/myupmc.png" height="40" />
+</a>
+
+<a href="https://enterprises.upmc.com" target="_blank">
+    <img alt="UPMC Enterprises" src="docs/logos/upmc-enterprises.jpg" height="40" />
+</a>
 </div>
