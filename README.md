@@ -7,16 +7,17 @@
 <h1>Gradle Slack Uploader Plugin<br/><sub>Upload anything to a Slack channel from Gradle</sub></h1>
 
 [📱 Demo](https://fabric.io/myupmc/android/apps/com.upmc.enterprises.myupmc.dev/beta/releases/latest) |
-[📖 Documentation](https://upmcenterprises.atlassian.net/wiki/spaces/MyUPMCMobile) |
+[📖 Documentation](#getting-started) |
 [📆 Version History](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
 
 ```text
 "Works to help you improve your CI and CD practices."
 ```
 
-<!-- [![Supported Kotlin Versions](https://img.shields.io/badge/Kotlin-1.3.21%2B-green.svg?logo=kotlin&style=flat&logoColor=green)](https://kotlinlang.org/)
+[![Supported Kotlin Versions](https://img.shields.io/badge/Kotlin-1.3.21%2B-green.svg?logo=kotlin&style=flat&logoColor=green)](https://kotlinlang.org/)
 [![Supported Gradle Versions](https://img.shields.io/badge/Gradle-4.10%2B-green.svg?logo=java&style=flat&logoColor=green)](https://gradle.org/)
-[![Available on JitPack](https://jitpack.io/v/upmc-enterprises/gradle-slack-uploader.svg)](https://jitpack.io/#upmc-enterprises/gradle-slack-uploader) -->
+[![Latest Release](https://img.shields.io/github/release/upmc-enterprises/gradle-slack-uploader-plugin.svg)](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
+[![Available on JitPack](https://jitpack.io/v/upmc-enterprises/gradle-slack-uploader.svg)](https://jitpack.io/#upmc-enterprises/gradle-slack-uploader)
 
 <hr />
 </div>
@@ -71,6 +72,82 @@ Unless your Slack administrator has banned unapproved apps from being installed 
 1. Click on *Install Your App to Your Workspace* and follow Slack's installation and permission prompts
 1. After installing the app, go back to the app's configuration
 1. On the left-column navigation go to *OAuth & Permissions*
-1. Make a note of the *Bot User OAuth Access Token* (not the OAuth Access Token). You will need this for a subsequent step.
+1. Make a note of the *Bot User OAuth Access Token* (not the OAuth Access Token). You will need this for a subsequent step. **Keep this token safe, as having access to it enables anyone to send messages to your workspace.**
 
     <img alt="Bot User OAuth Access Token" src="docs/screenshots/bot-access-token.png" width="320" />
+
+## Install the Plugin into Gradle
+
+After adding a bot account to Slack, we now have enough information to add the plugin to Gradle.
+
+1. Note the latest release of this plugin for use in the next step: [![Latest Release](https://img.shields.io/github/release/upmc-enterprises/gradle-slack-uploader-plugin.svg)](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
+1. Open your `build.gradle` file, and add this code to load the plugin:
+
+    ```groovy
+    buildscript {
+        dependencies {
+            classpath 'com.github.upmc-enterprises:gradle-slack-uploader:<latest version>'
+        }
+
+        repositories {
+            maven { url 'https://jitpack.io' }
+        }
+    }
+    ```
+
+1. Now, apply it:
+
+    ```groovy
+    apply plugin: "com.oliverspryn.gradleslackuploaderplugin"
+    ```
+
+# Configuring the Plugin
+
+There are a few ways you can use this plugin, depending on your needs. You may wish to adapt how you use this based on your setup. Before diving into the code, let's cover what this plugin offers:
+
+- **Configuration Block:** You must *always* configure this plugin with a block since it has required paramters:
+
+    ```groovy
+    uploadFileToSlack {
+        ...
+    }
+    ```
+
+    Otherwise, your build will fail with an exception until the necessary information is provided.
+- **Task:** To manually kick off an upload task, run the `uploadFileToSlack` task, like so:
+
+    ```bash
+    ./gradlew uploadFileToSlack
+    ```
+
+    Keep in mind you'll probably want a few commands beforehand to run a build and generate artifacts.
+
+## Configuration Block Options
+
+There are several parameters which are provided to alter the behavior of the plugin. Here is an example of a fully configured block:
+
+```groovy
+uploadFileToSlack {
+    comment "Our app is ready for release!"
+    channels "public-release-channel", "developers"
+    enabled true
+    filePath "app-release.apk"
+    token GRADLE_SLACK_UPLOADER_PLUGIN_TOKEN ?: "" // Defined in the global gradle.properties file
+}
+```
+
+Here is an elaboration of each of these options:
+
+| **Option** | **Default** | **Required** |                              **Description**                              |
+|:----------:|:-----------:|:------------:|:-------------------------------------------------------------------------:|
+|  `comment` |    *None*   |       ✅      | The comment which is shown above the file attachment in Slack             |
+| `channels` |    *None*   |       ✅      | Comma separated list of channels to send the file                         |
+|  `enabled` |    `true`   |       🚫      | Whether or not to run the plugin. Useful to restrict for use only on CIs. |
+| `filePath` |    *None*   |       ✅      | Path of the artifact to upload relative to the project root               |
+|   `token`  |    *None*   |       ✅      | Slack bot's OAuth access token                                            |
+
+## Technique 1 - Manually Call the Task
+
+This approach is slightly more manual, but could provide more clarity into your build process.
+
+1. 
