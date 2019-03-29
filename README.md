@@ -6,7 +6,7 @@
 
 <h1>Gradle Slack Uploader Plugin<br/><sub>Upload anything to a Slack channel from Gradle</sub></h1>
 
-[📱 Demo](https://fabric.io/myupmc/android/apps/com.upmc.enterprises.myupmc.dev/beta/releases/latest) |
+[📱 Demo](#build-and-run-this-project) |
 [📖 Documentation](#getting-started) |
 [📆 Version History](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
 
