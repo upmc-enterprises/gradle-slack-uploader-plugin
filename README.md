@@ -141,7 +141,7 @@ Here is an elaboration of each of these options:
 | **Option** | **Default** | **Required** |                              **Description**                              |
 |:----------:|:-----------:|:------------:|:-------------------------------------------------------------------------:|
 |  `comment` |    *None*   |       ✅      | The comment which is shown above the file attachment in Slack             |
-| `channels` |    *None*   |       ✅      | Comma separated list of channels to send the file                         |
+| `channels` |    *None*   |       ✅      | Comma separated list of channels which will receive the file              |
 |  `enabled` |    `true`   |       🚫      | Whether or not to run the plugin. Useful to restrict for use only on CIs. |
 | `filePath` |    *None*   |       ✅      | Path of the artifact to upload relative to the project root               |
 |   `token`  |    *None*   |       ✅      | Slack bot's OAuth access token                                            |
@@ -150,4 +150,23 @@ Here is an elaboration of each of these options:
 
 This approach is slightly more manual, but could provide more clarity into your build process.
 
-1. 
+1. Add the configuration block, as described in the [previous section](#configuration-block-options)
+1. When running the build, call the task manually:
+
+    ```bash
+    ./gradlew build // For example
+    ./gradlew uploadFileToSlack // Call this last
+    ```
+
+## Technique 2 - Attach the Plugin to the Task Graph
+
+Modifying Gradle's task graph is very simple and allows a task to run each time a more common task finishes. For example, it's very common to run `build` to compile an application. Let's attach the plugin to that task.
+
+1. Add the configuration block, as described in the [previous section](#configuration-block-options)
+1. Add this block to run `uploadFileToSlack` after `build` finishes:
+
+    ```groovy
+    afterEvaluate {
+        uploadFileToSlack.dependsOn build
+    }
+    ```
