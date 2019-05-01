@@ -1,11 +1,12 @@
 plugins {
+    id 'com.gradle.plugin-publish' version '0.10.1'
     id 'java-gradle-plugin'
     id 'maven'
     id 'org.jetbrains.kotlin.jvm' version '1.3.21'
 }
 
 group 'com.oliverspryn.gradle'
-version '1.0.0'
+version '1.0.1'
 
 gradlePlugin {
     plugins {
@@ -38,6 +39,19 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository(url: uri('./repo'))
+        }
+    }
+}
+
+pluginBundle {
+    description = 'Uploads artifacts from a Gradle build as a file to a Slack channel'
+    website = 'https://oliverspryn.com/'
+    vcsUrl = 'https://github.com/upmc-enterprises/gradle-slack-uploader-plugin'
+    tags = ['artifacts', 'build', 'build artifacts', 'cd', 'ci', 'files', 'kotlin', 'slack']
+
+    plugins {
+        gradleSlackUploaderPlugin {
+            displayName = 'Gradle Greeting plugin'
         }
     }
 }
