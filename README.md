@@ -6,7 +6,7 @@
 
 <h1>Gradle Slack Uploader Plugin<br/><sub>Upload anything to a Slack channel from Gradle</sub></h1>
 
-[📱 Demo](#build-and-run-this-project) |
+[🖥 Demo](#build-and-run-this-project) |
 [📖 Documentation](#getting-started) |
 [📆 Version History](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
 
@@ -16,7 +16,8 @@
 
 [![Supported Kotlin Versions](https://img.shields.io/badge/Kotlin-1.3.21%2B-green.svg?logo=kotlin&style=flat&logoColor=green)](https://kotlinlang.org/)
 [![Supported Gradle Versions](https://img.shields.io/badge/Gradle-4.10%2B-green.svg?logo=java&style=flat&logoColor=green)](https://gradle.org/)
-[![Latest Release](https://img.shields.io/github/release/upmc-enterprises/gradle-slack-uploader-plugin.svg)](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
+[![Latest Release](https://img.shields.io/github/release/upmc-enterprises/gradle-slack-uploader-plugin.svg?label=Release)](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
+![Available on the Gradle Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/oliverspryn/gradleslackuploaderplugin/com.oliverspryn.gradleslackuploaderplugin.gradle.plugin/maven-metadata.xml.svg?label=Gradle%20Plugin%20Portal)
 [![Available on JitPack](https://jitpack.io/v/upmc-enterprises/gradle-slack-uploader.svg)](https://jitpack.io/#upmc-enterprises/gradle-slack-uploader)
 
 <hr />
@@ -40,7 +41,7 @@ Whenever a file is uploaded, you can expect it to feel very familiar and flexibl
 
 # Getting Started
 
-There are two parts to installing this plugin. The first is, of course, installing it into your Gradle script and the second part is creating a Slack bot account with which the plugin uses to upload a file.
+There are two parts to installing this plugin. The first part is for creating a Slack bot account with which the plugin uses to upload a file and the second part is, of course, installing it into your Gradle script.
 
 ## Create the Slack Bot
 
@@ -80,7 +81,49 @@ Unless your Slack administrator has banned unapproved apps from being installed 
 
 After adding a bot account to Slack, we now have enough information to add the plugin to Gradle.
 
-1. Note the latest release of this plugin for use in the next step: [![Latest Release](https://img.shields.io/github/release/upmc-enterprises/gradle-slack-uploader-plugin.svg)](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
+### Using the Plugins DSL (Recommended)
+
+Newer version of Gradle support the updated [plugin DSL](https://docs.gradle.org/current/userguide/plugins.html#sec:plugins_block). These steps show how to install the plugin with this technique.
+
+1. Note the latest release of this plugin for use in the next step: [![Latest Release](https://img.shields.io/github/release/upmc-enterprises/gradle-slack-uploader-plugin.svg?label=Release)](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
+1. Open your `build.gradle` file, and add this code to load and applythe plugin:
+
+    ```groovy
+    plugins {
+        id 'com.oliverspryn.gradleslackuploaderplugin' version '<latest version>'
+    }
+    ```
+
+### Using the Legacy Plugin Application
+
+Older versions of Gradle do not support the modern [plugin DSL](https://docs.gradle.org/current/userguide/plugins.html#sec:plugins_block). Use this technique if the above approach fails.
+
+1. Note the latest release of this plugin for use in the next step: [![Latest Release](https://img.shields.io/github/release/upmc-enterprises/gradle-slack-uploader-plugin.svg?label=Release)](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
+1. Open your `build.gradle` file, and add this code to load and applythe plugin:
+
+    ```groovy
+    buildscript {
+        dependencies {
+            classpath 'com.oliverspryn.gradleslackuploaderplugin:<latest version>'
+        }
+
+        repositories {
+            maven { url 'https://plugins.gradle.org/m2/' }
+        }
+    }
+    ```
+
+1. Now, apply it:
+
+    ```groovy
+    apply plugin: 'com.oliverspryn.gradleslackuploaderplugin'
+    ```
+
+### Using JitPack (Not Recommended)
+
+For the sake of convinence, this plugin is also available on JitPack. These steps show how to install the plugin from there.
+
+1. Note the latest release of this plugin for use in the next step: [![Latest Release](https://img.shields.io/github/release/upmc-enterprises/gradle-slack-uploader-plugin.svg?label=Release)](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
 1. Open your `build.gradle` file, and add this code to load the plugin:
 
     ```groovy
@@ -98,7 +141,7 @@ After adding a bot account to Slack, we now have enough information to add the p
 1. Now, apply it:
 
     ```groovy
-    apply plugin: "com.oliverspryn.gradleslackuploaderplugin"
+    apply plugin: 'com.oliverspryn.gradleslackuploaderplugin'
     ```
 
 # Configuring the Plugin
