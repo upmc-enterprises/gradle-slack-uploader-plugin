@@ -17,7 +17,7 @@
 [![Supported Kotlin Versions](https://img.shields.io/badge/Kotlin-1.3.21%2B-green.svg?logo=kotlin&style=flat&logoColor=green)](https://kotlinlang.org/)
 [![Supported Gradle Versions](https://img.shields.io/badge/Gradle-4.10%2B-green.svg?logo=java&style=flat&logoColor=green)](https://gradle.org/)
 [![Latest Release](https://img.shields.io/github/release/upmc-enterprises/gradle-slack-uploader-plugin.svg?label=Release)](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
-![Available on the Gradle Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/google/cloud/tools/jib/com.google.cloud.tools.jib.gradle.plugin/maven-metadata.xml.svg?label=Gradle%20Plugin%20Portal)
+![Available on the Gradle Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/oliverspryn/gradleslackuploaderplugin/com.oliverspryn.gradleslackuploaderplugin.gradle.plugin/maven-metadata.xml.svg?label=Gradle%20Plugin%20Portal)
 [![Available on JitPack](https://jitpack.io/v/upmc-enterprises/gradle-slack-uploader.svg)](https://jitpack.io/#upmc-enterprises/gradle-slack-uploader)
 
 <hr />
