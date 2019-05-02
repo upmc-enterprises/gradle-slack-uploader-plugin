@@ -41,7 +41,7 @@ Whenever a file is uploaded, you can expect it to feel very familiar and flexibl
 
 # Getting Started
 
-There are two parts to installing this plugin. The first is, of course, installing it into your Gradle script and the second part is creating a Slack bot account with which the plugin uses to upload a file.
+There are two parts to installing this plugin. The first part is for creating a Slack bot account with which the plugin uses to upload a file and the second part is, of course, installing it into your Gradle script.
 
 ## Create the Slack Bot
 
