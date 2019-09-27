@@ -90,7 +90,7 @@ Newer version of Gradle support the updated [plugin DSL](https://docs.gradle.org
 
     ```groovy
     plugins {
-        id 'com.oliverspryn.gradleslackuploaderplugin' version '<latest version>'
+        id "com.oliverspryn.gradleslackuploaderplugin" version "<latest version>"
     }
     ```
 
@@ -103,12 +103,12 @@ Older versions of Gradle do not support the modern [plugin DSL](https://docs.gra
 
     ```groovy
     buildscript {
-        dependencies {
-            classpath 'com.oliverspryn.gradleslackuploaderplugin:<latest version>'
+        repositories {
+            maven { url "https://plugins.gradle.org/m2/" }
         }
 
-        repositories {
-            maven { url 'https://plugins.gradle.org/m2/' }
+        dependencies {
+            classpath "gradle.plugin.com.oliverspryn.gradle:gradle-slack-uploader-plugin:<latest version>"
         }
     }
     ```
@@ -128,12 +128,12 @@ For the sake of convinence, this plugin is also available on JitPack. These step
 
     ```groovy
     buildscript {
-        dependencies {
-            classpath 'com.github.upmc-enterprises:gradle-slack-uploader:<latest version>'
+        repositories {
+            maven { url "https://jitpack.io" }
         }
 
-        repositories {
-            maven { url 'https://jitpack.io' }
+        dependencies {
+            classpath "com.github.upmc-enterprises:gradle-slack-uploader:<latest version>"
         }
     }
     ```
@@ -141,7 +141,7 @@ For the sake of convinence, this plugin is also available on JitPack. These step
 1. Now, apply it:
 
     ```groovy
-    apply plugin: 'com.oliverspryn.gradleslackuploaderplugin'
+    apply plugin: "com.oliverspryn.gradleslackuploaderplugin"
     ```
 
 # Configuring the Plugin
@@ -197,21 +197,27 @@ This approach is slightly more manual, but could provide more clarity into your 
 1. When running the build, call the task manually:
 
     ```bash
-    ./gradlew build // For example
-    ./gradlew uploadFileToSlack // Call this last
+    ./gradlew build # For example
+    ./gradlew uploadFileToSlack # Call this last
     ```
 
 ## Technique 2 - Attach the Plugin to the Task Graph
 
-Modifying Gradle's task graph is very simple and allows a task to run each time a more common task finishes. For example, it's very common to run `build` to compile an application. Let's attach the plugin to that task.
+Modifying Gradle's task graph is very simple and allows a task to attach itself to a more important step. For example, it's very common to run `build` to compile an application. Let's guarantee that the `build` task is run each time `uploadFileToSlack` is called.
 
 1. Add the configuration block, as described in the [previous section](#configuration-block-options)
-1. Add this block to run `uploadFileToSlack` after `build` finishes:
+1. Add this block to run `build` before `uploadFileToSlack` is executed:
 
     ```groovy
     afterEvaluate {
         uploadFileToSlack.dependsOn build
     }
+    ```
+
+1. Next, run just the `uploadFileToSlack` task and the `build` task will run just beforehand to ensure that there are artifacts to upload:
+
+    ```bash
+    ./gradlew uploadFileToSlack
     ```
 
 # Build and Run this Project
@@ -225,7 +231,7 @@ The demo script publishes the plugin's JAR file to a local Maven repository loca
 
 # FAQs
 
-Here are answer to a few questions you may encounter when setting up or using the plugin:
+Here are answers to a few questions you may encounter when setting up or using the plugin:
 
 - **Does this plugin support uploading more than one file at a time?** No. Please consider zipping up multiple files and sending them out as one package if you need to upload more than one file to Slack.
 - **How can I conditionally enable the plugin only on CI builds?** Most CIs have a set of default environment variables which identify themselves as a build environment. For example, [Travis CI](https://docs.travis-ci.com/user/environment-variables/#default-environment-variables), [Azure Pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#agent-variables), and [GitLab CI](https://docs.gitlab.com/ee/ci/variables/#predefined-environment-variables) all have documentation on this. For instance, on a Travis CI build, one could conditionally enable the plugin like so:
