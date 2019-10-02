@@ -1,5 +1,5 @@
 <div align="center">
-<img src="docs/artwork/banner.png" />
+<img src=".docs/artwork/banner.png" />
 
 <br>
 <br>
@@ -14,10 +14,10 @@
 "Works to help you improve your CI and CD practices."
 ```
 
-[![Supported Kotlin Versions](https://img.shields.io/badge/Kotlin-1.3.21%2B-green.svg?logo=kotlin&style=flat&logoColor=green)](https://kotlinlang.org/)
-[![Supported Gradle Versions](https://img.shields.io/badge/Gradle-4.10%2B-green.svg?logo=java&style=flat&logoColor=green)](https://gradle.org/)
+[![Supported Kotlin Versions](https://img.shields.io/badge/Kotlin-1.3.50%2B-green.svg?logo=kotlin&style=flat&logoColor=green)](https://kotlinlang.org/)
+[![Supported Gradle Versions](https://img.shields.io/badge/Gradle-5.6.2%2B-green.svg?logo=java&style=flat&logoColor=green)](https://gradle.org/)
 [![Latest Release](https://img.shields.io/github/release/upmc-enterprises/gradle-slack-uploader-plugin.svg?label=Release)](https://github.com/upmc-enterprises/gradle-slack-uploader-plugin/releases)
-![Available on the Gradle Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/oliverspryn/gradleslackuploaderplugin/com.oliverspryn.gradleslackuploaderplugin.gradle.plugin/maven-metadata.xml.svg?label=Gradle%20Plugin%20Portal)
+![Available on the Gradle Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/oliverspryn/gradle/slackuploader/com.oliverspryn.gradle.slackuploader.gradle.plugin/maven-metadata.xml.svg?label=Gradle%20Plugin%20Portal)
 [![Available on JitPack](https://jitpack.io/v/upmc-enterprises/gradle-slack-uploader.svg)](https://jitpack.io/#upmc-enterprises/gradle-slack-uploader)
 
 <hr />
@@ -35,7 +35,7 @@ Whenever a file is uploaded, you can expect it to feel very familiar and flexibl
 
 <div align="center">
 
-![Slack message from the Gradle plugin with an APK file](docs/screenshots/slack-message.png)
+![Slack message from the Gradle plugin with an APK file](.docs/screenshots/slack-message.png)
 
 </div>
 
@@ -51,31 +51,31 @@ Unless your Slack administrator has banned unapproved apps from being installed 
 1. Press the *Create New App* button. Apps within Slack enable automated bots to post messages to a Slack channel.
 1. In the pop-up dialog, give the app a friendly name. This name is for your reference only and is not reflected as the bot's name in a Slack workspace whenever it posts a message. You will configure the bot's name later.
 
-    <img alt="Slack application creation dialog" src="docs/screenshots/create-app.png" width="320" />
+    <img alt="Slack application creation dialog" src=".docs/screenshots/create-app.png" width="320" />
 
 1. After creating the app, click on the *Bots* button, under the *Add Features and Functionality* section
 
-    <img alt="Add bot functionality" src="docs/screenshots/add-bot-functionality.png" width="320" />
+    <img alt="Add bot functionality" src=".docs/screenshots/add-bot-functionality.png" width="320" />
 
 1. Click the *Add a Bot User* button and fill out the form. The Display Name is effectively the bot's First and Last Name, which appears as the sender of a Slack message. You can populate this form as you please. Here is an example set up:
 
-    <img alt="Bot user details" src="docs/screenshots/bot-user-details.png" width="320" />
+    <img alt="Bot user details" src=".docs/screenshots/bot-user-details.png" width="320" />
 
 1. Save your changes and the go back to the *Basic Information* page, which is available from the left-column navigation
 1. Under the *Add Features and Functionality* section, both the *Bots* and *Permissions* features should show as completed
 
-    <img alt="Completed Features and Functionality" src="docs/screenshots/completed-features-and-functionality.png" width="320" />
+    <img alt="Completed Features and Functionality" src=".docs/screenshots/completed-features-and-functionality.png" width="320" />
 
 1. **(Optional)** Populate the *Display Information*. This can be thought of as the bot's profile picture and status message.
 
-    <img alt="Completed Features and Functionality" src="docs/screenshots/display-information.png" width="320" />
+    <img alt="Completed Features and Functionality" src=".docs/screenshots/display-information.png" width="320" />
 
 1. Click on *Install Your App to Your Workspace* and follow Slack's installation and permission prompts
 1. After installing the app, go back to the app's configuration
 1. On the left-column navigation go to *OAuth & Permissions*
 1. Make a note of the *Bot User OAuth Access Token* (not the OAuth Access Token). You will need this for a subsequent step. **Keep this token safe, as having access to it enables anyone to send messages to your workspace.**
 
-    <img alt="Bot User OAuth Access Token" src="docs/screenshots/bot-access-token.png" width="320" />
+    <img alt="Bot User OAuth Access Token" src=".docs/screenshots/bot-access-token.png" width="320" />
 
 ## Install the Plugin into Gradle
 
@@ -90,7 +90,7 @@ Newer version of Gradle support the updated [plugin DSL](https://docs.gradle.org
 
     ```groovy
     plugins {
-        id "com.oliverspryn.gradleslackuploaderplugin" version "<latest version>"
+        id "com.oliverspryn.gradle.slackuploader" version "<latest version>"
     }
     ```
 
@@ -108,7 +108,7 @@ Older versions of Gradle do not support the modern [plugin DSL](https://docs.gra
         }
 
         dependencies {
-            classpath "gradle.plugin.com.oliverspryn.gradle:gradle-slack-uploader-plugin:<latest version>"
+            classpath "gradle.plugin.com.oliverspryn.gradle:slack-uploader:<latest-version>"
         }
     }
     ```
@@ -116,7 +116,7 @@ Older versions of Gradle do not support the modern [plugin DSL](https://docs.gra
 1. Now, apply it:
 
     ```groovy
-    apply plugin: 'com.oliverspryn.gradleslackuploaderplugin'
+    apply plugin: "com.oliverspryn.gradle.slackuploader"
     ```
 
 ### Using JitPack (Not Recommended)
@@ -141,7 +141,7 @@ For the sake of convinence, this plugin is also available on JitPack. These step
 1. Now, apply it:
 
     ```groovy
-    apply plugin: "com.oliverspryn.gradleslackuploaderplugin"
+    apply plugin: "com.oliverspryn.gradle.slackuploader"
     ```
 
 # Configuring the Plugin
@@ -238,7 +238,7 @@ Here are answers to a few questions you may encounter when setting up or using t
 
     ```groovy
     static def isCIMachine() {
-       return System.getenv('CI') != null
+       return System.getenv("CI") != null
     }
 
     uploadFileToSlack {
@@ -256,10 +256,10 @@ Here are answers to a few questions you may encounter when setting up or using t
 <p>This plugin was inspired by a need for the <a href="https://myupmc.upmc.com" target="_blank">MyUPMC</a> project at <a href="https://enterprises.upmc.com" target="_blank">UPMC Enterprises</a></p>
 
 <a href="https://myupmc.upmc.com" target="_blank">
-    <img alt="MyUPMC" src="docs/logos/myupmc.png" height="40" />
+    <img alt="MyUPMC" src=".docs/logos/myupmc.png" height="40" />
 </a>
 
 <a href="https://enterprises.upmc.com" target="_blank">
-    <img alt="UPMC Enterprises" src="docs/logos/upmc-enterprises.jpg" height="40" />
+    <img alt="UPMC Enterprises" src=".docs/logos/upmc-enterprises.jpg" height="40" />
 </a>
 </div>
