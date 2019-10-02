@@ -8,4 +8,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'gradle-slack-uploader-plugin'
+rootProject.name = 'slack-uploader'
