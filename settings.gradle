@@ -8,4 +8,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'slack-uploader'
+rootProject.name = 'slackuploader'
