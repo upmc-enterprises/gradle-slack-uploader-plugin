@@ -1,7 +1,6 @@
 package com.oliverspryn.gradle
 
-import com.github.seratch.jslack.Slack
-import com.github.seratch.jslack.api.methods.request.files.FilesUploadRequest
+import allbegray.slack.webapi.SlackWebApiClientImpl
 import com.oliverspryn.gradle.exceptions.FileUploadException
 import com.oliverspryn.gradle.exceptions.MissingChannelException
 import com.oliverspryn.gradle.exceptions.MissingFilePathException
@@ -9,43 +8,36 @@ import com.oliverspryn.gradle.exceptions.MissingTokenException
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import java.nio.file.Paths
+import javax.inject.Inject
 
-open class SlackUploaderTask : DefaultTask() {
-
-    // region Configuration
-
-    var extension: SlackUploaderExtension? = null
-    var projectRoot: String? = null
-
-    // endregion
+open class SlackUploaderTask @Inject constructor(
+    private val extension: SlackUploaderExtension
+) : DefaultTask() {
 
     @TaskAction
     fun doUpload() {
+        if (!extension.enabled) return
 
-        if (extension?.enabled != true) return
-        validateConfiguration()
+        val channels = extension.channels?.toMutableList() ?: throw MissingChannelException()
+        val filePath = extension.filePath ?: throw MissingFilePathException()
+        val token = extension.token ?: throw MissingTokenException()
 
-        val file = Paths.get(projectRoot, extension?.filePath).toFile()
-        val slack = Slack.getInstance()
+        val file = Paths.get(project.rootDir.absolutePath, filePath).toFile()
+        val slack = SlackWebApiClientImpl(token)
 
-        val uploadRequest = FilesUploadRequest.builder()
-            .channels(extension?.channels)
-            .file(file)
-            .filename("${file.name}.${file.extension}")
-            .initialComment(extension?.comment ?: "")
-            .token(extension?.token)
-            .build()
-
-        val result = slack.methods().filesUpload(uploadRequest)
-
-        if (!result.isOk) {
-            throw FileUploadException(result.error)
+        try {
+            channels.forEach {
+                slack.uploadFile(
+                    file,
+                    file.extension,
+                    file.name,
+                    file.name,
+                    extension.comment ?: "",
+                    it
+                )
+            }
+        } catch (e: Exception) {
+            throw FileUploadException(e.localizedMessage)
         }
-    }
-
-    private fun validateConfiguration() {
-        if (extension?.channels.isNullOrEmpty()) throw MissingChannelException()
-        if (extension?.filePath.isNullOrBlank()) throw MissingFilePathException()
-        if (extension?.token.isNullOrBlank()) throw MissingTokenException()
     }
 }

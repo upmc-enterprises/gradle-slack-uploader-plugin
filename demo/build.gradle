@@ -1,12 +1,13 @@
 buildscript {
     repositories {
         maven {
+            maven { url 'https://jitpack.io' }
             url uri("../repo")
         }
     }
 
     dependencies {
-        classpath "com.oliverspryn.gradle:slack-uploader:2.0.0"
+        classpath "com.oliverspryn.gradle:slackuploader:2.0.0"
     }
 }
 
