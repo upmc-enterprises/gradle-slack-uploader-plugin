@@ -1,6 +1,6 @@
-package com.oliverspryn.gradle
+package com.oliverspryn.gradle.extensions
 
-open class SlackUploaderExtension {
+open class BasicFileUploaderExtension {
 
     var channels: List<String>? = null
     var comment: String? = null

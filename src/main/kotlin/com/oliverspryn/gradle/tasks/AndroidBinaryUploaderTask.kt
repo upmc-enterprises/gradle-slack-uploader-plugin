@@ -1,17 +1,20 @@
-package com.oliverspryn.gradle
+package com.oliverspryn.gradle.tasks
 
 import allbegray.slack.webapi.SlackWebApiClientImpl
 import com.oliverspryn.gradle.exceptions.FileUploadException
 import com.oliverspryn.gradle.exceptions.MissingChannelException
 import com.oliverspryn.gradle.exceptions.MissingFilePathException
 import com.oliverspryn.gradle.exceptions.MissingTokenException
+import com.oliverspryn.gradle.extensions.AndroidBinaryUploaderExtension
+import com.oliverspryn.gradle.extensions.BasicFileUploaderExtension
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import java.nio.file.Paths
 import javax.inject.Inject
 
-open class SlackUploaderTask @Inject constructor(
-    private val extension: SlackUploaderExtension
+open class AndroidBinaryUploaderTask @Inject constructor(
+    private val extension: AndroidBinaryUploaderExtension,
+    private val filePath: String
 ) : DefaultTask() {
 
     @TaskAction
@@ -19,7 +22,6 @@ open class SlackUploaderTask @Inject constructor(
         if (!extension.enabled) return
 
         val channels = extension.channels?.toMutableList() ?: throw MissingChannelException()
-        val filePath = extension.filePath ?: throw MissingFilePathException()
         val token = extension.token ?: throw MissingTokenException()
 
         val file = Paths.get(project.rootDir.absolutePath, filePath).toFile()
